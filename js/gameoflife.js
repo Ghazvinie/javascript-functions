@@ -1,5 +1,5 @@
 function seed(a,b,c) {
-  return Array.from(arguments);
+  return Array.slice.call(arguments);
 }
 
 function same([x, y], [j, k]) {

@@ -34,7 +34,6 @@ const corners = (state = []) => {
 };
 
 const printCells = (state) => { 
-  return corners(state)
 };
 
 console.log(printCells([[3,2],[2,3],[3,3],[3,4],[4,4]]));
@@ -46,7 +45,9 @@ const getNeighborsOf = ([x, y]) =>
   [x-1, y-1], [x, y-1], [x+1, y-1]
 ];
 
-const getLivingNeighbors = (cell, state) => { };
+const getLivingNeighbors = (cell, state) => { 
+
+};
 
 const willBeAlive = (cell, state) => { };
 

@@ -1,5 +1,5 @@
 function seed() {
-  return Array.from(arguments);
+  return Array.prototype.slice.call(arguments);
 }
 
 function same([x, y], [j, k]) {
@@ -12,7 +12,7 @@ function contains(cell) {
 }
 
 const printCell = (cell, state) => {
-  return contains.call(state, cell) ? '\u25A3' : '\u25A2';
+  return contains.call(state, cell) ? "\u25A3" : "\u25A2";
 };
 
 const corners = (state = []) => {
@@ -23,17 +23,25 @@ const corners = (state = []) => {
     };
   }
 
-  const xCoords = state.map(([a,b]) => a);
-  const yCoords = state.map(([a,b]) => b);
-
+  const xs = state.map(([x, _]) => x);
+  const ys = state.map(([_, y]) => y);
   return {
-    topRight: [Math.max(...xCoords), Math.max(...yCoords)],
-    bottomLeft: [Math.min(...yCoords), Math.min(...yCoords)]
+    topRight: [Math.max(...xs), Math.max(...ys)],
+    bottomLeft: [Math.min(...xs), Math.min(...ys)]
   };
-
 };
 
-const printCells = (state) => { 
+const printCells = state => {
+  const { bottomLeft, topRight } = corners(state);
+  let accumulator = "";
+  for (let y = topRight[1]; y >= bottomLeft[1]; y--) {
+    let row = [];
+    for (let x = bottomLeft[0]; x <= topRight[0]; x++) {
+      row.push(printCell([x, y], state));
+    }
+    accumulator += row.join(" ") + "\n";
+  }
+  return accumulator;
 };
 
 console.log(printCells([[3,2],[2,3],[3,3],[3,4],[4,4]]));
